@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/BigData.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index01.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery.js"></script>
+    <link href="js/bstable/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="js/bstable/css/bootstrap-table.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.bootcss.com/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="css/Security_operation.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="js/artDialog/skins/default.css" type="text/css"/>
+    <script src="js/laydate.js"></script>
+    <script src="js/Home_page.js"></script>
+    <meta charset="UTF-8">
+    <title>大数据管理平台</title>
+
+</head>
+<body>
+<div class="data_bodey">
+    <div class="index_tabs">
+        <!--安防运作-->
+        <div class="inner" style="height: 109%;">
+
+            <div class="left_cage">
+                <div class="dataAllBorder01 cage_cl" style="margin-top: 9% !important; height: 20%;">
+                    <table id="table" style="width: 120%" class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center; vertical-align: middle;width: 100%;height: 40px " data-field="carno"
+                                tabindex="0">
+                                <div class="th-inner ">温度检测</div>
+<!--                                <div class="fht-cell"></div>-->
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="height: 30px">
+                            <td>
+                                允许温度检测装置连接
+                            </td>
+                            <td>
+                                    <input type='checkbox' checked  class="checkbox" id="checkTemCanConnect">
+                            </td>
+                        </tr>
+                        <tr style="height: 30px">
+                            <td>温度检测装置状态</td>
+
+                            <td>
+                                <input type='checkbox' checked  class="checkbox" id="checkTemState">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dataAllBorder01 cage_cl"
+                     style="margin-top: 1.5% !important; height: 80%; position: relative;">
+                    <div class="dataAllBorder02" style="padding: 1.2%; overflow: hidden">
+
+                        <div class="message_scroll_box">
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level01">一级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level03">三级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level02">二级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level01">一级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="scroll_tool_outbox">
+                        <div class="scroll_tool_box">
+                            <a class="scroll_tool" href="#">查看历史推送</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center_cage">
+                <div class="dataAllBorder01 cage_cl" id="echartPos"
+                     style="margin-top: 3.5% !important; height: 62.7%; position: relative; ">
+
+                </div>
+
+                <div class="dataAllBorder01 cage_cl" style="margin-top: 0.6% !important; height: 32.1%;">
+                    <div class="dataAllBorder02" id="map_title_innerbox">
+                        <div class="map_title_box">
+                            <div class="map_title_innerbox">
+                                <div class="map_title" style="background-image: url(img/second_title.png);">服务器操作日志
+                                </div>
+                            </div>
+                            <!--                            <div >-->
+                            <!--                                <select id="selLayer" style="width:100px;">-->
+                            <!--                                    <option value="">车辆</option>-->
+                            <!--                                    <option value="">企业</option>-->
+                            <!--                                </select>-->
+                            <!--                            </div>-->
+                        </div>
+<!--                        <table id="table" style="width: 100%"></table>-->
+                    </div>
+
+                    <!--                    <div class="dataAllBorder02" id="map_title_innerbox1" style="display: none; position: relative;">-->
+                    <!--                        <div class="map_title_box">-->
+                    <!--                            <div class="map_title_innerbox">-->
+                    <!--                                <div class="map_title" style="background-image: url(img/second_title.png);">xxxxx条件扫描</div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <ul class="tab_msg_box">-->
+                    <!--                           <li class="tab_msg tab_msg01 tab_msg_current">xxxxx</li>-->
+                    <!--                            <li class="tab_msg tab_msg02">xxx</li>-->
+                    <!--                        </ul>-->
+                    <!--                        <div class="table1">-->
+                    <!--                        <table id="table1" style="width: 100%"></table>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="table2" style=" display: none;">-->
+                    <!--                        <table id="table2" style="width: 100%;"></table>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                </div>
+            </div>
+
+            <div class="right_cage">
+                <div class="dataAllBorder01 cage_cl" style="margin-top: 9% !important; height: 20%;">
+                    1122322111
+                    <button value="1223333" style="width: 20px"/>
+                </div>
+                <div class="dataAllBorder01 cage_cl"
+                     style="margin-top: 1.5% !important; height: 80%; position: relative;">
+                    <div class="dataAllBorder02" style="padding: 1.2%; overflow: hidden">
+
+                        <div class="message_scroll_box2">
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level01">一级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level03">三级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level02">二级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                            <div class="message_scroll">
+                                <div class="scroll_top">
+                                    <span class="scroll_title">数据流量警示</span>
+                                    <span class="scroll_level scroll_level01">一级</span>
+                                    <a class="localize"></a>
+                                    <span class="scroll_timer">17-09-13/9:52</span>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_title">下载大量视频</a>
+                                </div>
+                                <div class="msg_cage">
+                                    <a class="localize_msg">xxx视频网站</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="scroll_tool_outbox">
+                        <div class="scroll_tool_box">
+                            <a class="scroll_tool" href="#">查看历史推送</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--<script src="js/echarts-all.js"></script>-->
+    <!--<script src="js/index.js"></script>-->
+    <script src="js/bstable/js/bootstrap.min.js"></script>
+    <script src="js/bstable/js/bootstrap-table.js"></script>
+    <!--<script type="text/javascript" src="js/jquery.pagination.js"></script>-->
+    <script src="js/bstable/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5ieMMexWmzB9jivTq6oCRX9j&callback"></script>-->
+
+    <!--    &lt;!&ndash;<script src="js/MainMap.js"></script>&ndash;&gt;-->
+    <!--<script src="js/Home_page.js"></script>-->
+    <!--<script src="js/artDialog/artDialog.js"></script>-->
+    <!--<script src="js/artDialog/plugins/iframeTools.source.js"></script>-->
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <script type="text/javascript"
+            src="https://api.map.baidu.com/api?v=2.0&ak=AwexbDTB75r6yEKboZYoz5ThdPKHRU0a&__ec_v__=20190126"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+
+    <script>
+        var dom = document.getElementById("echartPos");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            title: {
+                text: 'Graph 简单示例'
+            },
+            tooltip: {},
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'none',
+                    symbolSize: 100,
+                    roam: true,
+                    label: {
+                        show: true
+                    },
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [4, 10],
+                    edgeLabel: {
+                        fontSize: 20
+                    },
+                    data: [{
+                        name: '温度计',
+                        x: 300,
+                        y: 300,
+                        color: '#31cc23'
+                    }, {
+                        name: '空调',
+                        x: 800,
+                        y: 300
+                    }, {
+                        name: '服务端',
+                        x: 550,
+                        y: 100
+                    }],
+                    // links: [],
+                    links: [{
+                        source: '温度计',
+                        target: '服务端',
+                        label: {
+                            show: true
+                        },
+                        lineStyle: {
+                            curveness: 0.2
+                        }
+                    }, {
+                        source: '空调',
+                        target: '服务端'
+                    }],
+                    lineStyle: {
+                        opacity: 0.9,
+                        width: 2,
+                        curveness: 0,
+                        color: "#2050cc"
+                    }
+                }
+            ]
+        };
+        ;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script>
+
+        // var socket = new WebSocket("ws://47.97.191.207:8888");
+        var socket = new WebSocket("ws://127.0.0.1:8888/socket/server");
+
+        //连接打开事件
+        socket.onopen = function () {
+            console.log("Socket 已打开");
+            // socket.send("消息发送测试(From Client)");
+        };
+        //收到消息事件
+        socket.onmessage = function (msg) {
+            // var T=setInterval(TimeControl,2300);    //开始定时
+            var data = JSON.parse(msg.data);
+            console.log(data.platform);
+            console.log(data.date)
+            if (data.platform === 'TemperatureDetection') {
+                dealTemperature(data)
+            } else if (data.platform === 'AirConditioner') {
+                dealAirConditioner(data)
+            }
+
+        };
+        //连接关闭事件
+        socket.onclose = function () {
+            console.log("Socket已关闭");
+        };
+        //发生了错误事件
+        socket.onerror = function () {
+            alert("Socket发生了错误");
+        }
+
+
+        //窗口关闭时，关闭连接
+        window.unload = function () {
+            socket.close();
+        };
+
+        /**
+         * data.type:
+         *  0：正常
+         *  1：热
+         *  2：冷
+         * @param data
+         */
+        function dealTemperature(data) {
+            _type = '温度计监控消息';
+            height = '正常';
+            style = 'scroll_level01';
+            if (data.type === 0) {
+                height = '正常'
+            } else if (data.type === 1) {
+                height = '偏热';
+                style = 'scroll_level02';
+            } else {
+                height = '偏冷';
+                style = 'scroll_level03';
+            }
+
+            date = data.date;
+            message = '当前温度为：' + data.temperature;
+            $(".message_scroll_box").animate({marginTop: 96}, 800,
+                function () {
+                    var dom = $(' <div class="message_scroll">\n' +
+                        '                            <div class="scroll_top">\n' +
+                        '                                <span class="scroll_title">' + _type + '</span>\n' +
+                        '                                <span class="scroll_level ' + style + '">' + height + '</span>\n' +
+                        '                                <a class="localize"></a>\n' +
+                        '                                <span class="scroll_timer">' + date + '</span>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="msg_cage">\n' +
+                        '                                <a class="localize_title"></a>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="msg_cage">\n' +
+                        '                                <a class="localize_msg">' + message + '</a>\n' +
+                        '                            </div>\n' +
+                        '                        </div>')
+
+                    $(".message_scroll_box").css({marginTop: 0});    //把顶部的边界清零
+                    // $(".message_scroll_box .message_scroll:first").before($(".message_scroll_box .message_scroll:last"));    //在第一个新闻后面插入最后一个新闻
+                    $(".message_scroll_box .message_scroll:first").before(dom);    //在第一个新闻后面插入最后一个新闻
+
+                });
+        }
+
+        function dealAirConditioner(data) {
+
+        }
+
+        function TimeControl() {
+
+        }
+
+    </script>
+
+    <!--轨迹回放时间日期选择-->
+    <script>
+        !function () {
+            laydate.skin('danlan');//切换皮肤，请查看skins下面皮肤库
+            laydate({elem: '#demo'});
+            laydate({elem: '#demo1'});//绑定元素
+        }();
+        //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'YYYY-MM-DD',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            elem: '#end',
+            format: 'YYYY-MM-DD',
+            min: laydate.now(),
+            max: '2099-06-16',
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，充值开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+
+        function edit() {
+            layer.open({
+                type: 2,
+                title: '存储详情',
+                shade: 0.5,
+                skin: 'layui-layer-rim',
+                area: ['700px', '400px'],
+                shadeClose: true,
+                closeBtn: 1,
+                content: 'saveFindTail.html'
+            });
+        }
+    </script>
+
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
