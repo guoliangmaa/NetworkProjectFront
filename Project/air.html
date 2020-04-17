@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <input type="button" onclick="sendRegular()" value="发送消息">
+
 </body>
 
 
@@ -19,7 +19,7 @@
 
         var date = Date.parse(new Date());
         var message = {
-            temperature: 52,
+            temperature: 25,
             date: date
         }
         socket.send(JSON.stringify(message));
@@ -35,7 +35,7 @@
         //注意ws、wss使用不同的端口。我使用自签名的证书测试，
         //无法使用wss，浏览器打开WebSocket时报错
         //ws对应http、wss对应https。
-        socket = new WebSocket("ws://127.0.0.1:8888/socket/TemperatureDetection");
+        socket = new WebSocket("ws://127.0.0.1:8888/socket/AirConditioner");
         // socket = new WebSocket("ws://47.97.191.207:8888");
         // socket = new WebSocket("ws://127.0.0.1:8888/");
 
@@ -47,8 +47,38 @@
         //收到消息事件
         socket.onmessage = function(msg) {
             console.log(msg.data);
+            var data = JSON.parse(msg.data);
+
+            if(data.msg === 'normal'){
+                setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 0,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                },5000)
+            }else if (data.msg === 'up'){
+                setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 1,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                },5000)
+            }else {
+                setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 2,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                },5000)
+            }
         };
-            //连接关闭事件
+        //连接关闭事件
         socket.onclose = function() {
             console.log("Socket已关闭");
         };
