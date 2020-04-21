@@ -23,7 +23,7 @@
         <div class="inner" style="height: 109%;">
 
             <div class="left_cage">
-                <div class="dataAllBorder01 cage_cl" style="margin-top: 9% !important; height: 20%;">
+                <div class="dataAllBorder_01 cage_cl0" style="margin-top: 9% !important; height: 20%;">
                     <table id="table1" style="width: 120%" class="table table-hover table-striped">
                         <thead>
                         <tr>
@@ -54,74 +54,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="dataAllBorder01 cage_cl"
+                <div class="dataAllBorder_01 cage_cl0"
                      style="margin-top: 1.5% !important; height: 80%; position: relative;">
-                    <div class="dataAllBorder02" style="padding: 1.2%; overflow: hidden">
+                    <div class="dataAllBorder_02" style="padding: 1.2%; overflow: hidden">
 
-                        <div class="message_scroll_box">
-                            <div class="message_scroll">
-<!--                                <div class="scroll_top">-->
-<!--                                    <span class="scroll_title">数据流量警示</span>-->
-<!--                                    <span class="scroll_level scroll_level01">一级</span>-->
-<!--                                    <a class="localize"></a>-->
-<!--                                    <span class="scroll_timer">17-09-13/9:52</span>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_title">下载大量视频</a>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_msg">xxx视频网站</a>-->
-<!--                                </div>-->
+                        <div class="message_scroll_box0" id="message_scroll_box0">
+                            <div class="message_scroll0">
                             </div>
-<!--                            <div class="message_scroll">-->
-<!--                                <div class="scroll_top">-->
-<!--                                    <span class="scroll_title">数据流量警示</span>-->
-<!--                                    <span class="scroll_level scroll_level03">三级</span>-->
-<!--                                    <a class="localize"></a>-->
-<!--                                    <span class="scroll_timer">17-09-13/9:52</span>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_title">下载大量视频</a>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_msg">xxx视频网站</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="message_scroll">-->
-<!--                                <div class="scroll_top">-->
-<!--                                    <span class="scroll_title">数据流量警示</span>-->
-<!--                                    <span class="scroll_level scroll_level02">二级</span>-->
-<!--                                    <a class="localize"></a>-->
-<!--                                    <span class="scroll_timer">17-09-13/9:52</span>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_title">下载大量视频</a>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_msg">xxx视频网站</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="message_scroll">-->
-<!--                                <div class="scroll_top">-->
-<!--                                    <span class="scroll_title">数据流量警示</span>-->
-<!--                                    <span class="scroll_level scroll_level01">一级</span>-->
-<!--                                    <a class="localize"></a>-->
-<!--                                    <span class="scroll_timer">17-09-13/9:52</span>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_title">下载大量视频</a>-->
-<!--                                </div>-->
-<!--                                <div class="msg_cage">-->
-<!--                                    <a class="localize_msg">xxx视频网站</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
                         </div>
 
-                    </div>
-                    <div class="scroll_tool_outbox">
-                        <div class="scroll_tool_box">
-                            <a class="scroll_tool" href="#">查看历史推送</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -148,7 +89,7 @@
             </div>
 
             <div class="right_cage">
-                <div class="dataAllBorder01 cage_cl" style="margin-top: 9% !important; height: 20%;">
+                <div class="dataAllBorder01_ cage_cl1" style="margin-top: 9% !important; height: 20%;">
                     <table id="table2" style="width: 120%" class="table table-hover table-striped">
                         <thead>
                         <tr>
@@ -179,9 +120,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="dataAllBorder01 cage_cl"
+                <div class="dataAllBorder01_ cage_cl1"
                      style="margin-top: 1.5% !important; height: 80%; position: relative;">
-                    <div class="dataAllBorder02" style="padding: 1.2%; overflow: hidden">
+                    <div class="dataAllBorder02_" style="padding: 1.2%; overflow: hidden">
 
                         <div class="message_scroll_box1" id="message_scroll_box1">
                             <div class="message_scroll1">
@@ -319,9 +260,9 @@
             console.log(data.platform);
             console.log(data.date)
             if (data.platform === 'TemperatureDetection') {
-                dealTemperature(data)
+                dealTemperature(JSON.parse(msg.data))
             } else if (data.platform === 'AirConditioner') {
-                dealAirConditioner(data)
+                dealAirConditioner(JSON.parse(msg.data))
             }
 
         };
@@ -363,9 +304,9 @@
 
             date = data.date;
             message = '当前温度为：' + data.temperature;
-            $(".message_scroll_box").animate({marginTop: 96}, 800,
+            $("#message_scroll_box0").animate({marginTop: 96}, 800,
                 function () {
-                    var dom = $(' <div class="message_scroll">\n' +
+                    var dom = $(' <div class="message_scroll0">\n' +
                     '                            <div class="scroll_top">\n' +
                     '                                <span class="scroll_title">' + _type + '</span>\n' +
                     '                                <span class="scroll_level ' + style + '">' + height + '</span>\n' +
@@ -380,9 +321,9 @@
                     '                            </div>\n' +
                     '                        </div>')
 
-                    $(".message_scroll_box").css({marginTop: 0});    //把顶部的边界清零
+                    $("#message_scroll_box0").css({marginTop: 0});    //把顶部的边界清零
                     // $(".message_scroll_box .message_scroll:first").before($(".message_scroll_box .message_scroll:last"));    //在第一个新闻后面插入最后一个新闻
-                    $(".message_scroll_box .message_scroll:first").before(dom);    //在第一个新闻后面插入最后一个新闻
+                    $("#message_scroll_box0 .message_scroll0:first").before(dom);    //在第一个新闻后面插入最后一个新闻
 
 
 
@@ -405,7 +346,7 @@
 
             date = data.date;
             message = '当前空调运行状态 ：' + height;
-            $(".message_scroll_box1").animate({marginTop: 96}, 800,
+            $("#message_scroll_box1").animate({marginTop: 96}, 800,
                 function () {
                     var dom1 = $(' <div class="message_scroll1">\n' +
                         '                            <div class="scroll_top">\n' +
@@ -422,9 +363,9 @@
                         '                            </div>\n' +
                         '                        </div>')
 
-                    $(".message_scroll_box1").css({marginTop: 0});    //把顶部的边界清零
+                    $("#message_scroll_box1").css({marginTop: 0});    //把顶部的边界清零
                     // $(".message_scroll_box .message_scroll:first").before($(".message_scroll_box .message_scroll:last"));    //在第一个新闻后面插入最后一个新闻
-                    $(".message_scroll_box1 .message_scroll1:first").before(dom1);    //在第一个新闻后面插入最后一个新闻
+                    $("#message_scroll_box1 .message_scroll1:first").before(dom1);    //在第一个新闻后面插入最后一个新闻
 
 
                 });
