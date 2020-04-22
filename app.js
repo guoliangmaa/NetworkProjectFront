@@ -6,7 +6,7 @@ const session = require('express-session');
 app.use(express.static('Project'));
 
 
-const apiProxy = proxy('/', { target: 'http://localhost:8080',changeOrigin: true })
+const apiProxy = proxy('/', { target: 'http://localhost:8888',changeOrigin: true })
 app.use('/', apiProxy);
 
 

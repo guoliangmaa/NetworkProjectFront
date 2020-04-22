@@ -5,21 +5,41 @@
     <title>Title</title>
 </head>
 <body>
-    <input type="button" onclick="sendRegular()" value="发送消息">
+    <input type="button" onclick="sendRegular1()" value="发送高温">
+    <input type="button" onclick="sendRegular2()" value="发送低温">
 </body>
 
 
 <script>
     var socket;
+    var t1;
+    var t2;
+    sendRegular1 = function(){
+        clearInterval(t2)
+        clearInterval(t1)
+        t1 = setInterval("sendMessage()",2000);
+    }
 
-    sendRegular = function(){
-        setInterval("sendMessage()",2000);
+    sendRegular2 = function(){
+        clearInterval(t1)
+        clearInterval(t2)
+        t2 = setInterval("sendMessage2()",2000);
     }
     sendMessage = function () {
 
         var date = Date.parse(new Date());
         var message = {
             temperature: 50,
+            date: date
+        }
+        socket.send(JSON.stringify(message));
+    }
+
+    sendMessage2 = function () {
+
+        var date = Date.parse(new Date());
+        var message = {
+            temperature: 12,
             date: date
         }
         socket.send(JSON.stringify(message));

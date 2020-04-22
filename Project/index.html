@@ -13,7 +13,7 @@
     <script src="js/laydate.js"></script>
     <script src="js/Home_page.js"></script>
     <meta charset="UTF-8">
-    <title>大数据管理平台</title>
+    <title>服务端</title>
 
 </head>
 <body>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div id="table" style="width: 100%;margin-left: 5px; margin-top: 5px; overflow: auto;height: 85%">
-                            <div class="localize_msg server_msg" >操作节点中，正在才做加上放大第三方第三方第三方是</div>
+                            <div class="localize_msg server_msg" ></div>
                         </div>
                     </div>
                 </div>
@@ -170,13 +170,90 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
 
     <script>
+        $(function(){
+            getAirConditionerOpen();
+            getTemperatureOpen();
+            getAirConditionerIsConnected();
+            getTemperatureIsConnected();
+        });
+
+        function getTemperatureOpen() {
+            $.ajax({
+                url : '/api/get_open.action',
+                method: 'get',
+                data: {
+                    platform: 'TemperatureDetection',
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data === '0'){
+                        $('#checkTemCanConnect').attr('checked')
+                    }else {
+                        $('#checkTemCanConnect').removeAttr('checked')
+                    }
+                }
+            })
+        }
+
+        function getAirConditionerOpen() {
+
+            $.ajax({
+                url : '/api/get_open.action',
+                method: 'get',
+                data: {
+                    platform: 'AirConditioner',
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data === '0'){
+                        $('#checkConditionerCanConnect').attr('checked')
+                    }else {
+                        $('#checkConditionerCanConnect').removeAttr('checked')
+                    }
+                }
+            })
+        }
+
+        function getTemperatureIsConnected() {
+            $.ajax({
+                url : '/api/get_connect.action',
+                method: 'get',
+                data: {
+                    platform: 'TemperatureDetection',
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data === '0'){
+                        setConnectedGraph('TemperatureDetection')
+                    }
+                }
+            })
+        }
+
+        function getAirConditionerIsConnected() {
+            $.ajax({
+                url : '/api/get_connect.action',
+                method: 'get',
+                data: {
+                    platform: 'AirConditioner',
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data === '0'){
+                        setConnectedGraph('AirConditioner')
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
         var dom = document.getElementById("echartPos");
         var myChart = echarts.init(dom);
         var app = {};
         option = null;
         option = {
             title: {
-                text: 'Graph 简单示例'
+                text: ''
             },
             tooltip: {},
             animationDurationUpdate: 1500,
@@ -218,14 +295,14 @@
                         },
                         lineStyle: {
                             curveness: 0.2,
-                            color: "#0ACC04"
+                            color: "#CC000E"
                         }
                     }, {
                         source: '空调',
                         target: '服务端',
                         lineStyle: {
                             curveness: 0.2,
-                            color: "#0ACC04"
+                            color: "#CC000E"
                         }
                     }],
                     lineStyle: {
@@ -243,6 +320,7 @@
         }
     </script>
     <script>
+
 
         // var socket = new WebSocket("ws://47.97.191.207:8888");
         // var socket = new WebSocket("ws://47.97.191.207:8888/socket/server");
@@ -263,6 +341,22 @@
                 dealTemperature(JSON.parse(msg.data))
             } else if (data.platform === 'AirConditioner') {
                 dealAirConditioner(JSON.parse(msg.data))
+            }else if(data.platform === 'java'){
+                //如果是java，那么消息是告诉服务端温度计和空调的链接状况
+                if(data.open){
+                    setConnectedGraph(data.open)
+
+                    if (data.open === 'TemperatureDetection'){
+                        appendMessage('温度计已连接服务器！');
+                    }else{
+                        appendMessage('空调已连接服务器！');
+                    }
+                }
+
+                if (data.close){
+                    data.close === 'TemperatureDetection' ? unableConnect(0) : unableConnect(1)
+                    data.close === 'TemperatureDetection' ? appendMessage('温度计已断开服务器') : unableConnect('空调已断开服务器')
+                }
             }
 
         };
@@ -289,9 +383,9 @@
          * @param data
          */
         function dealTemperature(data) {
-            _type = '温度计监控消息';
-            height = '正常';
-            style = 'scroll_level01';
+            var _type = '温度计监控消息';
+            var height = '正常';
+            var style = 'scroll_level01';
             if (data.type === 0) {
                 height = '正常'
             } else if (data.type === 1) {
@@ -302,8 +396,8 @@
                 style = 'scroll_level03';
             }
 
-            date = data.date;
-            message = '当前温度为：' + data.temperature;
+            var date = data.date;
+            var message = '当前温度为：' + data.temperature;
             $("#message_scroll_box0").animate({marginTop: 96}, 800,
                 function () {
                     var dom = $(' <div class="message_scroll0">\n' +
@@ -331,9 +425,9 @@
         }
 
         function dealAirConditioner(data) {
-            _type = '空调监控消息';
-            height = '正常';
-            style = 'scroll_level01';
+            var _type = '空调监控消息';
+            var height = '正常';
+            var style = 'scroll_level01';
             if (data.type === 0) {
                 height = '正常'
             } else if (data.type === 1) {
@@ -344,8 +438,8 @@
                 style = 'scroll_level03';
             }
 
-            date = data.date;
-            message = '当前空调运行状态 ：' + height;
+            var date = data.date;
+            var message = '当前空调运行状态 ：' + height;
             $("#message_scroll_box1").animate({marginTop: 96}, 800,
                 function () {
                     var dom1 = $(' <div class="message_scroll1">\n' +
@@ -389,8 +483,8 @@
                     socket.send(JSON.stringify(message))
                     appendMessage('已禁止温度控制单元连接服务器！')
 
-                    option.series[0].links[0].lineStyle.color = '#CC000E';
-                    myChart.setOption(option,true)
+                    unableConnect(0);
+
                 }catch (e) {
                     appendMessage('禁止温度控制单元连接服务器命令发送失败！')
                 }
@@ -405,34 +499,11 @@
                     socket.send(JSON.stringify(message))
                     appendMessage('已允许温度控制单元连接服务器！')
 
-                    option.series[0].links[0].lineStyle.color = '#0ACC04';
-                    myChart.setOption(option,true)
                 }catch (e) {
                     appendMessage('允许温度控制单元连接服务器命令发送失败！')
                 }
             }
         })
-
-        //温度计是开还是关
-        // $('#checkTemState').change(function () {
-        //     var bool = $('#checkTemState').is(':checked');
-        //     var message;
-        //     if(bool){
-        //         message = {
-        //             platform: 'TemperatureDetection',
-        //             data: 'open_temperature'
-        //         };
-        //
-        //         try {
-        //             socket.send(JSON.stringify(message))
-        //             appendMessage('已控制温度控制单元开机！')
-        //         }catch (e) {
-        //             appendMessage('允许温度控制单元连接服务器命令发送失败！')
-        //         }
-        //     }
-        //
-        //     appendMessage('connect!!')
-        // })
 
         //让不让空调连接
         $('#checkConditionerCanConnect').change(function () {
@@ -447,8 +518,8 @@
                     socket.send(JSON.stringify(message))
                     appendMessage('已禁止温度调节装置连接服务器！')
 
-                    option.series[0].links[1].lineStyle.color = '#CC000E'
-                    myChart.setOption(option,true)
+                    unableConnect(1);
+
                 }catch (e) {
                     appendMessage('禁止温度调节装置连接命令发送失败！')
                 }
@@ -461,8 +532,6 @@
                     socket.send(JSON.stringify(message))
                     appendMessage('已允许温度调节装置连接服务器！')
 
-                    option.series[0].links[1].lineStyle.color = '#0ACC04'
-                    myChart.setOption(option,true)
                 }catch (e) {
                     appendMessage('允许温度调节装置连接命令发送失败！')
                 }
@@ -488,6 +557,27 @@
 
 
         }
+
+        function unableConnect(index) {
+            option.series[0].links[index].lineStyle.color = '#CC000E';
+            myChart.setOption(option,true)
+        }
+
+        function setConnectedGraph(platform){
+
+            switch (platform) {
+                case 'TemperatureDetection':
+                    option.series[0].links[0].lineStyle.color = '#0ACC04';
+                    myChart.setOption(option,true)
+                    break;
+                case 'AirConditioner' :
+                    option.series[0].links[1].lineStyle.color = '#0ACC04'
+                    myChart.setOption(option,true)
+                    break;
+            }
+
+        }
+
 
         Date.prototype.format = function (fmt) {
             var o = {

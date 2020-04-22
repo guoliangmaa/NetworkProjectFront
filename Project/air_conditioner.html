@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>空调运作</title>
+    <style class="cp-pen-styles">
+        @import url(http://fonts.useso.com/css?family=Open+Sans:800);
+
+        *,
+        *:before,
+        *:after {
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        body {
+
+        }
+
+        .button {
+            display: block;
+            position: absolute;
+            width: 240px;
+            height: 80px;
+            top: 50%;
+            left: 75%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            background: -webkit-linear-gradient(top, #11181f 0%, #161f29 100%);
+            background: linear-gradient(to bottom, #11181f 0%, #161f29 100%);
+            border-radius: 40px;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        .button span {
+            position: absolute;
+            display: block;
+        }
+
+        .button span:first-of-type {
+            z-index: 100;
+            top: 4px;
+            right: 4px;
+            width: 160px;
+            height: 72px;
+            background: -webkit-linear-gradient(top, #2c3e50 0%, #1e2a36 100%);
+            background: linear-gradient(to bottom, #2c3e50 0%, #1e2a36 100%);
+            box-shadow: 0 6px 4px rgba(255, 255, 255, 0.1) inset, 0 2px 0px rgba(255, 255, 255, 0.2) inset, 0 -6px 0px rgba(0, 0, 0, 0.2) inset, 0 -2px 0px rgba(0, 0, 0, 0.2) inset, 0 2px 2px rgba(0, 0, 0, 0.4), -4px 2px 8px rgba(0, 0, 0, 0.4), 2px 0 1px rgba(242, 201, 197, 0.5) inset;
+            border-radius: 36px;
+            -webkit-transition: right 400ms cubic-bezier(1, 0, 0, 1), box-shadow 400ms ease;
+            transition: right 400ms cubic-bezier(1, 0, 0, 1), box-shadow 400ms ease;
+        }
+
+        .button span:nth-last-of-type(-n+2) {
+            z-index: 10;
+            top: 4px;
+            width: 116px;
+            height: 72px;
+            -webkit-transition: opacity 800ms ease 100ms;
+            transition: opacity 800ms ease 100ms;
+        }
+
+        .button span:nth-last-of-type(-n+2):after {
+            position: absolute;
+            top: 26px;
+            line-height: 1;
+            font-family: "Open Sans";
+            font-weight: 800;
+            font-size: 24px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 20px #ffffff;
+        }
+
+        .button span:nth-of-type(2) {
+            left: 4px;
+            background: -webkit-linear-gradient(top, #c0392b 0%, #d65548 100%);
+            background: linear-gradient(to bottom, #c0392b 0%, #d65548 100%);
+            border-top-left-radius: 36px;
+            border-bottom-left-radius: 36px;
+            box-shadow: 4px 4px 12px 4px rgba(0, 0, 0, 0.5) inset, 0 -2px 8px rgba(0, 0, 0, 0.4) inset;
+        }
+
+        .button span:nth-of-type(2):after {
+            content: "OFF";
+            left: 18px;
+        }
+
+        .button span:last-of-type {
+            right: 4px;
+            background: -webkit-linear-gradient(top, #2ecc71 0%, #7ee2a8 100%);
+            background: linear-gradient(to bottom, #2ecc71 0%, #7ee2a8 100%);
+            border-top-right-radius: 36px;
+            border-bottom-right-radius: 36px;
+            box-shadow: -4px 4px 12px 4px rgba(0, 0, 0, 0.5) inset, 0 -2px 8px rgba(0, 0, 0, 0.4) inset;
+            opacity: 0.2;
+        }
+
+        .button span:last-of-type:after {
+            content: "ON";
+            right: 22px;
+        }
+
+        .button input[type="checkbox"] {
+            display: none;
+        }
+
+        .button input[type="checkbox"]:checked ~ span:first-of-type {
+            right: 76px;
+            box-shadow: 0 6px 4px rgba(255, 255, 255, 0.1) inset, 0 2px 0px rgba(255, 255, 255, 0.2) inset, 0 -6px 0px rgba(0, 0, 0, 0.2) inset, 0 -2px 0px rgba(0, 0, 0, 0.2) inset, 0 2px 2px rgba(0, 0, 0, 0.4), 4px 2px 8px rgba(0, 0, 0, 0.4), -2px 0 1px rgba(209, 245, 224, 0.5) inset;
+        }
+
+        .button input[type="checkbox"]:checked ~ span:nth-of-type(2) {
+            opacity: 0.2;
+        }
+
+        .button input[type="checkbox"]:checked ~ span:last-of-type {
+            opacity: 1;
+        }
+    </style>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 400px;
+            height: 340px;
+            margin-top: 250px;
+            margin-left: 250px;
+        }
+
+        .main .container {
+            width: 300px;
+            height: 150px;
+            position: relative;
+            perspective: 150px;
+        }
+
+        .main .container .box {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .main .container .box figure {
+            display: block;
+            position: absolute;
+        }
+
+        .main .container .box .front {
+            width: 500px;
+            height: 200px;
+            background-color: rgba(255, 160, 122, .7);
+        }
+
+        .main .container .box .front h1 {
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #FFF;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .main .container .box .front span {
+            width: 80px;
+            height: 30px;
+            line-height: 35px;
+            font-size: 15px;
+            color: #FFF;
+            text-align: center;
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            background-color: rgba(95, 95, 95, 1);
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .main .container .box .front .pic {
+            position: absolute;
+            top: 85px;
+            right: 70px;
+            display: inline-block;
+        }
+
+        .main .container .box .front .light-1 {
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            background-color: #ceccc8;
+            position: absolute;
+            top: 85px;
+            right: 70px;
+            display: inline-block;
+        }
+
+        .main .container .box .front .light-2 {
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            background-color: #ceccc8;
+            position: absolute;
+            top: 85px;
+            right: 100px;
+            display: inline-block;
+        }
+
+        .main .container .box .front .light-2.active {
+            background-color: #56FA0A;
+            box-shadow: 0 0 10px 1px #FFF;
+        }
+
+        .main .container .box .back {
+            width: 500px;
+            height: 200px;
+            transform: translateZ(-20px);
+            background-color: rgba(50, 50, 50, 1);
+        }
+
+        .main .container .box .right {
+            width: 20px;
+            height: 200px;
+            left: 490px;
+            transform: translateZ(-10px) rotateY(90deg);
+            background-color: rgba(254, 205, 82, .8);
+        }
+
+        .main .container .box .left {
+            width: 20px;
+            height: 200px;
+            left: -15px;
+            transform: translateZ(-15px) rotateY(-90deg);
+            background-color: rgba(254, 205, 82, .8);
+        }
+
+        .main .container .box .top {
+            width: 500px;
+            height: 20px;
+            top: -10px;
+            transform: translateZ(-10px) rotateX(90deg);
+            background-color: rgba(18, 20, 80, .8);
+        }
+
+        .main .container .box .bottom {
+            width: 500px;
+            height: 20px;
+            top: 190px;
+            transform: translateZ(-10px) rotateX(-90deg);
+            background-color: rgba(18, 20, 80, .8);
+            box-shadow: 40px -10px 30px 4px gray;
+        }
+
+        .main .container .box .div-1 {
+            width: 260px;
+            height: 10px;
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, .8);
+            transform: translateZ(-5px) rotateX(90deg);
+        }
+
+        .main .container .box .div-1:nth-of-type(2) {
+            top: 120px;
+        }
+
+        .animate-cycle {
+            animation: cycle 12s linear infinite both;
+        }
+
+        @keyframes cycle {
+            0% {
+                transform: translateZ(-5px) rotateX(90deg);
+            }
+            25% {
+                transform: translateZ(-5px) rotateX(20deg);
+            }
+            50% {
+                transform: translateZ(-5px) rotateX(90deg);
+            }
+            75% {
+                transform: translateZ(-5px) rotateX(160deg);
+            }
+            100% {
+                transform: translateZ(-5px) rotateX(90deg);
+            }
+        }
+
+        .main .box-1 {
+            width: 80px;
+            height: 150px;
+            border: 1px solid #F57E0F;
+            margin-top: 20px;
+            margin-left: 20px;
+            background-color: #19e6f8;
+        }
+
+        .main .box-1 span {
+            width: 50px;
+            height: 25px;
+            background-color: #F57E0F;
+            color: #FFF;
+            display: block;
+            line-height: 25px;
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .main .box-1 span:hover {
+            background-color: #fcd05a;
+        }
+
+        body {
+            background-image: url(img/壁纸.jpg);
+            background-size: cover;
+            text-align: center
+        }
+
+        #pic {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 45px;
+            height: 80px;
+            z-index: 1;
+        }
+
+        #xian1 {
+            position: absolute;
+            width: 435px;
+            top: 160px;
+            left: 20px;
+            z-index: 1;
+        }
+
+        #xian2 {
+            position: absolute;
+            width: 435px;
+            top: 175px;
+            left: 20px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="container">
+        <div class="box">
+            <figure class="front">
+                <h1>GREE</h1>
+                <hr width="99.5%" color="black" size="3"/>
+                <div id="pic">
+                    <img src="img/标识.jpg" width="45" height="80"/>
+                </div>
+                <div id="xian1">
+                    <hr width="100%" color="black" size="1"/>
+                </div>
+                <div id="xian2">
+                    <hr width="100%" color="black" size="1"/>
+                </div>
+                <span id="num">未连接</span>
+                <div class="light-1"></div>
+                <div class="light-2" id="light"></div>
+            </figure>
+            <figure class="back"></figure>
+            <figure class="right"></figure>
+            <figure class="left"></figure>
+            <figure class="top"></figure>
+            <figure class="bottom"></figure>
+        </div>
+    </div>
+</div>
+<!--<label class="button">-->
+<!--    <input type="checkbox" id="my_checkbox"/>-->
+<!--    <span></span>-->
+<!--    <span></span>-->
+<!--    <span></span>-->
+<!--</label>-->
+</body>
+
+<script src="js/jquery.js"></script>
+<script>
+    var socket;
+    var t1, t2, t3;
+
+
+    if (typeof (WebSocket) == "undefined") {
+        console.log("遗憾：您的浏览器不支持WebSocket");
+    } else {
+        console.log("恭喜：您的浏览器支持WebSocket");
+
+
+        socket = new WebSocket("ws://127.0.0.1:8888/socket/AirConditioner");
+        // socket = new WebSocket("ws://47.97.191.207:8888");
+        // socket = new WebSocket("ws://127.0.0.1:8888/");
+
+
+        //连接打开事件
+        socket.onopen = function () {
+            console.log("Socket 已打开");
+            $('#num').html('正常工作')
+            console.log(222)
+            // socket.send("消息发送测试(From Client)");
+        };
+        //收到消息事件
+        socket.onmessage = function (msg) {
+            console.log(msg.data);
+            var data = JSON.parse(msg.data);
+
+            if (data.msg === 'normal') {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                $('#num').html('正常工作');
+                t1 = setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 0,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                }, 5000)
+            } else if (data.msg === 'up') {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                $('#num').html('升温中');
+                t2 = setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 1,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                }, 5000)
+            } else {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                $('#num').html('降温中');
+                t3 = setInterval(function () {
+                    var date = Date.parse(new Date());
+                    var message = {
+                        type: 2,
+                        date: date,
+                    }
+                    socket.send(JSON.stringify(message));
+                }, 5000)
+            }
+        };
+        //连接关闭事件
+        socket.onclose = function () {
+            console.log("Socket已关闭");
+            $('#num').html('未连接');
+        };
+        //发生了错误事件
+        socket.onerror = function () {
+            $('#num').html('未连接');
+            alert("Socket发生了错误");
+        }
+
+
+        //窗口关闭时，关闭连接
+        window.unload = function () {
+            socket.close();
+        };
+    }
+
+
+
+</script>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>温度计页面</title>
+	</head>
+	<body>
+
+		<div id="app" >
+			<!--<input type="button" value="开始测量" />-->
+	<!--		<input type="button" value="随机生成温度" @click="RanderNum"/>-->
+			<input type="button"  value="自动随机生成较低温度"  @click="AutoRandLow" />
+			<input type="button"  value="自动随机生成正常温度" @click="AutoRandNormal" />
+			<input type="button"  value="自动随机生成较高温度" @click="AutoRandHigh"  />
+			<input type="button"  value="停止生成温度" @click="StopRand"/>
+			<p>低温：1~20  正常温度：21~30  高温：31~40</p>
+
+			<h1>当前温度：  {{ tempreture }} ℃</h1>
+
+			<ul>历史温度显示：
+				<li  v-for="item in list" >  {{item}}  </li>
+			</ul>
+		</div>
+
+
+		<script>
+			Date.prototype.format = function (fmt) {
+				var o = {
+					"M+": this.getMonth() + 1, //月份
+					"d+": this.getDate(), //日
+					"h+": this.getHours(), //小时
+					"m+": this.getMinutes(), //分
+					"s+": this.getSeconds(), //秒
+					"q+": Math.floor((this.getMonth() + 3) / 3), //季度
+					"S": this.getMilliseconds() //毫秒
+				};
+				if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+				for (var k in o)
+					if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				return fmt;
+			}
+		</script>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+		<script>
+			var app=new Vue({
+				el:"#app",
+				data:{
+					tempreture:25,				//就是对应的每次传的温度
+					time:null,					//就是对应的每次传的时间
+					list:[],					//存温度+时间      温度是tempreture，时间是time
+					switch: 0,
+					con:0,   					//控制显示时间
+					auto:0,					    //控制生成随机数
+					isStop:false,
+					max: 10,
+					min: 0,
+					auto: null,
+					socket: null,
+				},
+				methods:{
+					init:function() {
+						this.socket = new WebSocket("ws://127.0.0.1:8888/socket/TemperatureDetection");
+						this.socket.onopen = this.onopen;
+						// this.socket.onerror = this.error;
+						// 监听socket消息
+						// this.socket.onmessage = this.onmessage;
+						this.socket.onclose = this.close;
+					},
+					onopen : function(){
+						console.log('socket connected!')
+						this.list.push(new Date().format("yyyy-MM-dd hh:mm:ss") + '  :已建立与服务器的连接')
+					},
+					close : function(){
+						console.log('socket disconnected!');
+						this.list.push(new Date().format("yyyy-MM-dd hh:mm:ss") + '  :已关闭与服务器的连接')
+						clearInterval(this.auto);
+					},
+					//每隔一秒生成一次随机数
+					AutoRandLow:function(){
+						if(this.isStop)
+							this.StopRand();
+
+						this.max = 20;
+						this.min = 1;
+				        // auto = setInterval(this.RanderNumLow,2000);
+						// this.isStop = true;
+						//
+						// //显示每一条的时间
+						// this.showtime();
+
+						this.clock();
+
+					},
+					AutoRandNormal:function(){
+						// if(this.isStop)
+						// 	this.StopRand();
+				        // auto = setInterval(this.RanderNumNormal,2000);
+						// this.isStop = true;
+
+						this.max = 30;
+						this.min = 21;
+						//显示每一条的时间
+						this.clock();
+
+					},
+					AutoRandHigh:function(){
+						// if(this.isStop)
+						// 	this.StopRand();
+				        // // auto = setInterval(this.RanderNumHigh,2000);
+						// this.isStop = true;
+
+						this.max = 40;
+						this.min = 31;
+
+						//显示每一条的时间
+						this.clock();
+
+					},
+					//暂停生成随机数
+					StopRand:function(){
+						clearInterval(this.auto);
+						clearInterval(con);
+//						console.log("暂停了");
+					},
+					//得到每一条的时间       time就表示每一条的时间表示时间
+					clock:function(){
+						clearInterval(this.auto)
+						// this.StopRand();
+						var that = this;
+
+						this.auto = setInterval(() => {
+							var t = new Date();
+							var year = t.getFullYear();
+							var month = t.getMonth()+1;
+							var day = t.getDate();
+							var hour = t.getHours();
+							var minute = t.getMinutes();
+							var second = t.getSeconds();
+							that.time = year+"/"+month+"/"+day+"  "+hour+((minute<10?":0":":"))+minute+((second<10?":0":":"))+second;
+
+							var num = parseInt(Math.random()*(that.max-that.min+1)+that.min);
+							that.tempreture = num;
+
+							that.list.push(new Date().format("yyyy-MM-dd hh:mm:ss") + '  :  温度为： ' + this.tempreture);
+
+							// var temperature = parseInt(this.tempreture);
+							var message = {
+								temperature: num,
+								date: Date.parse(t)
+							}
+							that.socket.send(JSON.stringify(message));
+						},3000)
+
+
+
+
+//						console.log(month);
+					},
+					showtime:function(){
+						con = setInterval(this.clock,4000);
+					}
+				}
+			})
+
+			app.init();
+
+		</script>
+	</body>
+</html>

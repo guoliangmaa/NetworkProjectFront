@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app" >
+        <input type="button"  value="自动随机生成较低温度"  @click="renderTemperature(0)" />
+        <input type="button"  value="自动随机生成正常温度" @click="renderTemperature(1)" />
+
+        <h1>当前温度：  {{ temperature }}</h1>
+        <ul>历史温度显示：
+            <br />
+            <li  v-for="item in list" >  {{item}}  </li>
+
+        </ul>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data:{
+            temperature: 25,
+            time:null,
+            list: [],
+        },
+        methods: {
+            //小于10低，10-25中
+            renderTemperature : function (type) {
+
+                clearInterval(this.time)
+
+                var that = this;
+                this.time = setInterval(() =>{
+                    var temperature;
+                    switch (parseInt(type)) {
+                        case 0:
+                            temperature = Math.random() * 10;
+                            break;
+                        case 1:
+                            temperature = Math.random() * 15 + 10;
+                            break;
+                    }
+                    that.temperature = temperature;
+                    that.list.push(new Date() + '温度为： ' + temperature)
+                },2000)
+
+            }
+        }
+    })
+</script>
+</html>

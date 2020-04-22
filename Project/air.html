@@ -11,6 +11,7 @@
 
 <script>
     var socket;
+    var t1,t2,t3;
 
     sendRegular = function(){
         setInterval("sendMessage()",2000);
@@ -50,7 +51,10 @@
             var data = JSON.parse(msg.data);
 
             if(data.msg === 'normal'){
-                setInterval(function () {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                t1 = setInterval(function () {
                     var date = Date.parse(new Date());
                     var message = {
                         type: 0,
@@ -59,7 +63,10 @@
                     socket.send(JSON.stringify(message));
                 },5000)
             }else if (data.msg === 'up'){
-                setInterval(function () {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                t2 = setInterval(function () {
                     var date = Date.parse(new Date());
                     var message = {
                         type: 1,
@@ -68,7 +75,10 @@
                     socket.send(JSON.stringify(message));
                 },5000)
             }else {
-                setInterval(function () {
+                clearInterval(t1);
+                clearInterval(t2);
+                clearInterval(t3);
+                t3 = setInterval(function () {
                     var date = Date.parse(new Date());
                     var message = {
                         type: 2,
